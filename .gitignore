@@ -42,3 +42,15 @@ node_modules/codex-notifier/LICENSE
 node_modules/codex-notifier/package.json
 node_modules/codex-notifier/README.md
 node_modules/codex-notifier/dist/bundle.js
+node_modules/@editorjs/list/README.md
+node_modules/@editorjs/embed/LICENSE.md
+node_modules/@editorjs/embed/package.json
+node_modules/@editorjs/embed/README.md
+node_modules/@editorjs/embed/dist/bundle.js
+node_modules/@editorjs/header/LICENSE
+node_modules/@editorjs/header/package.json
+node_modules/@editorjs/header/README.md
+node_modules/@editorjs/header/dist/bundle.js
+node_modules/@editorjs/list/LICENSE
+node_modules/@editorjs/list/package.json
+node_modules/@editorjs/list/dist/bundle.js

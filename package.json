@@ -10,7 +10,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@editorjs/editorjs": "^2.15.1"
+  "devDependencies": {},
+  "dependencies": {
+    "@editorjs/editorjs": "^2.15.1",
+    "@editorjs/embed": "^2.2.1",
+    "@editorjs/header": "^2.3.0",
+    "@editorjs/list": "^1.4.0"
   }
 }

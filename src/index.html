@@ -9,9 +9,19 @@
 </head>
 <body>
 
-    <h1>TravelKeep</h1>
-    <div id="editorjs"></div>
-    <button>Save</button>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <h5 class="my-0 mr-md-auto font-weight-normal">TravelKeep</h5>
+        <nav class="my-2 my-md-0 mr-md-3">                
+            <a class="p-2 text-dark" href="#">About</a>
+        </nav>
+        <a class="btn btn-outline-primary" href="#">Sign up</a>
+    </div>
+    
+    <div class="container-fluid">
+        <div id="editorjs"></div>     
+        <a class="btn btn-outline-primary save-btn" href="#">Save</a>
+        <pre class="pre-scrollable output-content" id="output"></pre>        
+    </div>       
 
     <script src="./js/index.js"></script>
         

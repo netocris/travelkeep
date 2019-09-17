@@ -1,11 +1,18 @@
+/* TODO: delete ... */
+/*
 import { firebaseConfig } from './firebase-config';
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+console.log('firebase start ...');
+const db = firebase.initializeApp(firebaseConfig);
+console.log('firebase started ...');
 
+export { db };*/
+
+
+/*const firestore = db.firestore();
+const docRef = firestore.doc('users/RjpvMCypjPRGIzKIp2RM');*/
 /*
-const firestore = db.firestore();
-const docRef = firestore.doc('users/RjpvMCypjPRGIzKIp2RM');
 docRef.set({
     email: 'netocris@gmail.com',
     displayName: 'Cristóvão Neto',
@@ -22,10 +29,10 @@ docRef.onSnapshot((doc) => {
     if(doc && doc.exists){
         console.log('displayName: ', doc.data().displayName);    
     };
-});
+});*/
 
 
-colRef.add({
+/*colRef.add({
     email: 'netocris@gmail.com',
     displayName: 'Cristóvão Neto',
     photoUrl: 'https://lh5.googleusercontent.com/-qkMkXEF6HpQ/AAAAAAAAAAI/AAAAAAAAADI/J8vzxmDNSpI/photo.jpg'
@@ -35,15 +42,10 @@ colRef.add({
 })
 .catch(function(error) {
     console.error("Error adding document: ", error);
-});
-
-docRef.get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-        if(doc && doc.exists){
-            console.log(`${doc.id} => ${doc.data().displayName}`);    
-        }
-    }).catch(function(error) {
-        console.error("Error get document: ", error);
-    });
-});
-*/
+});*/
+/*
+docRef.onSnapshot((doc) => {    
+    if(doc && doc.exists){
+        console.log('displayName: ', doc.data().displayName);    
+    };
+});*/

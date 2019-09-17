@@ -7,6 +7,7 @@ import Warning from '@editorjs/warning';
 import Delimiter from '@editorjs/delimiter';
 
 import { cPreview } from './json-preview';
+import { firebaseService } from './firebase-service';
 
 const editor = new EditorJS({
   /**
@@ -56,8 +57,13 @@ let saveBtn = document.querySelector('.save-btn');
 saveBtn.addEventListener('click', function(){
     editor.save().then((data) => {
         console.log('Article data: ', data);
-        cPreview.show(data, document.getElementById("output"));
+        cPreview.show(data, document.getElementById("output"));        
     }).catch((error) => {
         console.log('Saving failed: ', error);
     });
+});
+
+let loadBtn = document.querySelector('.load-btn');
+loadBtn.addEventListener('click', function(){
+    firebaseService.get('users', 'RjpvMCypjPRGIzKIp2RM');    
 });

@@ -1,4 +1,4 @@
-@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+//@import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
 body {
     //background: rgb(233, 233, 233);
@@ -13,6 +13,10 @@ body {
 }
 
 .save-btn {    
+    margin-top: 2em;
+}
+
+.load-btn {    
     margin-top: 2em;
 }
 

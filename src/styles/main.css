@@ -10580,10 +10580,9 @@ body {
   margin: 0 25px auto !important;
 }
 
-.ce-toolbar {
-  left: -600px !important;
-}
-
+/*.ce-toolbar {
+    left: -600px !important;
+}*/
 .container-fluid {
   padding-left: 0;
   padding-right: 0;

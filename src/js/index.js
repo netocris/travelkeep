@@ -56,7 +56,6 @@ const editor = new EditorJS({
 let saveBtn = document.querySelector('.save-btn');
 saveBtn.addEventListener('click', function(){
     editor.save().then((data) => {
-        console.log('Article data: ', data);
         cPreview.show(data, document.getElementById("output"));        
     }).catch((error) => {
         console.log('Saving failed: ', error);

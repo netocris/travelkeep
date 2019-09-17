@@ -1,6 +1,12 @@
 // Your web app's Firebase configuration
-const firebaseConfig = {
-    // set firebase project configuration
+const firebaseConfig = {    
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: ""
 };
 
 export { firebaseConfig };

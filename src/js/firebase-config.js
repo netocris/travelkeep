@@ -1,5 +1,6 @@
 // Your web app's Firebase configuration
-const firebaseConfig = {    
+const firebaseConfig = {
+    // TODO: Replace the following with your app's Firebase project configuration
     apiKey: "",
     authDomain: "",
     databaseURL: "",

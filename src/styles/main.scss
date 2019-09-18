@@ -9,14 +9,6 @@ body {
     background: white;    
 }
 
-.save-btn {    
-    margin-top: 2em;
-}
-
-.load-btn {    
-    margin-top: 2em;
-}
-
 .ce-block__content {
     margin: 0 25px auto !important;
 }
@@ -45,4 +37,26 @@ body {
   
 .output-content:empty {
     display: none;
+}
+
+.save-btn {    
+    margin-top: 2em;
+}
+
+.load-btn {    
+    margin-top: 2em;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.login-info img {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
 }

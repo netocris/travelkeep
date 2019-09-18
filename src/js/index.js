@@ -1,13 +1,7 @@
-import EditorJS from '@editorjs/editorjs';
-import Header from '@editorjs/header';
-import List from '@editorjs/list';
-import Embed from '@editorjs/embed';
-import SimpleImage from '@editorjs/simple-image';
-import Warning from '@editorjs/warning';
-import Delimiter from '@editorjs/delimiter';
-
 import { cPreview } from './json-preview';
 import { firebaseService } from './firebase-service';
+
+//import image from '../assets/images/neutral-user.png';
 
 let loggedIn = false;
 
@@ -84,15 +78,22 @@ firebase.auth().onAuthStateChanged(function(user) {
         loggedIn = true;
         $('.login-btn').removeClass('auth-false').addClass('auth-true');
         $('.login-btn').html('Sign out');
-        $('.user-area').html(user.displayName);
-        
+        //$('.logged-user').html(user.displayName);
+        $('.login-user-img').attr('src', user.photoURL);
+        $('.login-user-img').attr('title', user.displayName);
+        $('div.login-info').removeClass('hide').addClass('show');
     } else {
         // No user is signed in.
         console.log('No user is signed in');
         loggedIn = false;
         $('.login-btn').removeClass('auth-true').addClass('auth-false');            
         $('.login-btn').html('Sign in');
-        $('.user-area').html('');
+        //$('.logged-user').html('');
+        //$('.login-user-img').attr('src', image);
+        //$('.login-user-img').attr('title', 'No user is signed in');
+        $('.login-user-img').attr('src', '');
+        $('.login-user-img').attr('title', '');
+        $('div.login-info').has('img[src=""]').removeClass('show').addClass('hide');
     }
 });
 

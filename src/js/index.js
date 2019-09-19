@@ -89,7 +89,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         $('.login-info').removeClass('hide').addClass('show');
     } else {             
         loggedIn = false;
-        $('.login-info').has('img[src=""]').removeClass('show').addClass('hide');
+        $('.login-info').removeClass('show').addClass('hide');
         $('.login-btn').removeClass('auth-true').addClass('auth-false');            
         $('.login-btn').html('Sign in');
         $('.login-user-img').attr('src', '');

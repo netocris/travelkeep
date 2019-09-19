@@ -9,7 +9,7 @@ const cPreview = (function (module) {
      */
     module.show = function(output, holder) {
       /** Make JSON pretty */
-      output = JSON.stringify( output, null, 4 );
+      output = JSON.stringify( output, null, 2 );
       /** Encode HTML entities */
       output = encodeHTMLEntities( output );
       /** Stylize! */

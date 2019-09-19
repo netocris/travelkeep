@@ -1,9 +1,11 @@
 import { cPreview } from './json-preview';
 import { firebaseService } from './firebase-service';
 
-//import image from '../assets/images/neutral-user.png';
+import userLogo from '../assets/images/neutral-user.png';
 
 let loggedIn = false;
+
+let userId = {};
 
 const editor = new EditorJS({
     holder: 'editorjs',  
@@ -46,9 +48,10 @@ const editor = new EditorJS({
 
 let saveBtn = document.querySelector('.save-btn');
 saveBtn.addEventListener('click', function(){
-    editor.save().then((data) => {
-        console.log('saveBtn.click: ', JSON.stringify(data));
+    editor.save().then((data) => {        
+        delete data.version;
         cPreview.show(data, document.getElementById("output"));
+        firebaseService.add('records/' + userId + '/items', data);
     }).catch((error) => {
         console.log('Saving failed: ', error);
     });
@@ -56,12 +59,17 @@ saveBtn.addEventListener('click', function(){
 
 let loadBtn = document.querySelector('.load-btn');
 loadBtn.addEventListener('click', function(){    
-    firebaseService.get('users', 'RjpvMCypjPRGIzKIp2RM');    
+    //const data = firebaseService.get('records/' + userId + '/items/LQg04OL9b4P3RFwoXHKF');    
+    const docRef = firebase.firestore().doc('records/' + userId + '/items/LQg04OL9b4P3RFwoXHKF');
+    docRef.onSnapshot(function(doc) {
+        if(doc && doc.exists){
+            console.log(doc);                                   
+        }
+    });       
 });
 
 let loginBtn = document.querySelector('.login-btn');
 loginBtn.addEventListener('click', function(){
-    console.log('isLogeedIn: ', loggedIn);
     if(loggedIn){
         firebaseService.signOut();
     } else {
@@ -72,28 +80,28 @@ loginBtn.addEventListener('click', function(){
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-        // user is signed in
-        console.log('user is signed in');
-        console.log('user: ', JSON.stringify(user.displayName));
         loggedIn = true;
+        userId = user.uid;
+        $('.login-user-img').attr('src', !isEmptyValue(user.photoURL) ? user.photoURL : userLogo);                
+        $('.login-user-img').attr('title', user.displayName);        
         $('.login-btn').removeClass('auth-false').addClass('auth-true');
         $('.login-btn').html('Sign out');
-        //$('.logged-user').html(user.displayName);
-        $('.login-user-img').attr('src', user.photoURL);
-        $('.login-user-img').attr('title', user.displayName);
-        $('div.login-info').removeClass('hide').addClass('show');
-    } else {
-        // No user is signed in.
-        console.log('No user is signed in');
+        $('.login-info').removeClass('hide').addClass('show');
+    } else {             
         loggedIn = false;
+        $('.login-info').has('img[src=""]').removeClass('show').addClass('hide');
         $('.login-btn').removeClass('auth-true').addClass('auth-false');            
         $('.login-btn').html('Sign in');
-        //$('.logged-user').html('');
-        //$('.login-user-img').attr('src', image);
-        //$('.login-user-img').attr('title', 'No user is signed in');
         $('.login-user-img').attr('src', '');
         $('.login-user-img').attr('title', '');
-        $('div.login-info').has('img[src=""]').removeClass('show').addClass('hide');
+        
     }
 });
+
+function isEmptyValue(value) {
+    if (value === undefined || value === null || value.split(' ').join('') === '') {
+        return true;
+    }
+    return false;
+};
 

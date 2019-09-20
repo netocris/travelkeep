@@ -7,6 +7,9 @@ let loggedIn = false;
 
 let userId = {};
 
+const firestore = firebase.firestore();
+const auth = firebase.auth();
+
 const editor = new EditorJS({
     holder: 'editorjs',  
     autofocus: true,
@@ -49,9 +52,18 @@ const editor = new EditorJS({
 let saveBtn = document.querySelector('.save-btn');
 saveBtn.addEventListener('click', function(){
     editor.save().then((data) => {        
+        
         delete data.version;
         cPreview.show(data, document.getElementById("output"));
-        firebaseService.add('records/' + userId + '/items', data);
+        // firebaseService.add('records/' + userId + '/items', data);
+
+        firestore.collection('records/' + userId + '/items')
+            .add(data)
+            .then(function() {})
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
+
     }).catch((error) => {
         console.log('Saving failed: ', error);
     });
@@ -59,13 +71,29 @@ saveBtn.addEventListener('click', function(){
 
 let loadBtn = document.querySelector('.load-btn');
 loadBtn.addEventListener('click', function(){    
-    //const data = firebaseService.get('records/' + userId + '/items/LQg04OL9b4P3RFwoXHKF');    
-    const docRef = firebase.firestore().doc('records/' + userId + '/items/LQg04OL9b4P3RFwoXHKF');
-    docRef.onSnapshot(function(doc) {
-        if(doc && doc.exists){
-            console.log(doc);                                   
-        }
-    });       
+
+    const arr = [];
+    const datas = firebaseService.getAll('records/' + userId + '/items');
+    //const data = firebaseService.get('records/' + userId + '/items/AtPZWhe63L55RCptg9om');
+    //arr.push(data);
+
+    cPreview.show(datas, document.getElementById("output"));
+    
+    // firestore.collection('/records/' + userId + '/items')
+    //     .get()
+    //     .then(function(querySnapshot) {
+    //         let arr = [];
+    //         querySnapshot.forEach(function(doc) {
+    //             if(doc && doc.exists){
+    //                 arr.push(doc.data());                    
+    //             }
+    //         });
+    //         cPreview.show(arr, document.getElementById("output"));
+    //     })
+    //     .catch(function(error) {
+    //         console.log("Error getting documents: ", error);
+    //     });
+
 });
 
 let loginBtn = document.querySelector('.login-btn');
@@ -78,7 +106,7 @@ loginBtn.addEventListener('click', function(){
     }    
 });
 
-firebase.auth().onAuthStateChanged(function(user) {
+auth.onAuthStateChanged(function(user) {
     if (user) {
         loggedIn = true;
         userId = user.uid;

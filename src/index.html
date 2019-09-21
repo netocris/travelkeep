@@ -25,15 +25,28 @@
         <div class="my-2 my-md-0 mr-md-3 login-info hide">
             <img class="login-user-img" src="" title="" alt="User photo">
         </div>
-        <a class="btn btn-outline-primary auth-false login-btn" href="#">Sign in</a>
+        <a class="btn btn-outline-primary login-btn" href="#">Sign in</a>
     </div>
     
-    <div class="container-fluid">
-        <div id="editorjs"></div>     
-        <a class="btn btn-outline-primary save-btn" href="#">Save</a>
-        <a class="btn btn-outline-primary load-btn" href="#">Load</a>
-        <pre class="pre-scrollable output-content" id="output"></pre>        
-    </div>       
+    <div class="jumbotron show">
+        <div class="container text-center">
+            <h1 class="display-3">Travel memories</h1>
+            <p>Keep your travel history safe and easy to access. You can easily remember all the places you've been.</p>
+        </div>
+    </div>    
+
+    <div class="container-fluid hide">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="editorjs"></div>
+                <a class="btn btn-outline-primary save-btn" href="#">Save</a>
+                <!--<a class="btn btn-outline-primary load-btn" href="#">Load</a>-->
+            </div>        
+            <div class="col-md-6">
+                <pre class="history history-content" id="output"></pre>
+            </div>
+        </div>                
+    </div>
 
 
     <!-- bootstrap -->  

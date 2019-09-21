@@ -1,14 +1,64 @@
 import { cPreview } from './json-preview';
-import { firebaseService } from './firebase-service';
+// import { firebaseService } from './firebase-service';
 
 import userLogo from '../assets/images/neutral-user.png';
 
 let loggedIn = false;
 
-let userId = {};
+let userId = '-';
+
+const timeout = 500;
 
 const firestore = firebase.firestore();
 const auth = firebase.auth();
+
+let unsubscribe;
+
+/* Authentication */
+let loginBtn = document.querySelector('.login-btn');
+loginBtn.addEventListener('click', function(){
+    if(loggedIn){
+        // firebaseService.signOut();
+        auth.signOut();
+    } else {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        // firebaseService.signInWithProvider(provider);
+        auth.signInWithPopup(provider)
+            .then(function(result){})
+            .catch(function(error) {            
+                console.log('error: ', error.code, error.message);
+            });
+    }    
+});
+
+auth.onAuthStateChanged(function(user) {
+    if (user) {
+        console.log('onAuthStateChanged.loggedin'); 
+        loggedIn = true;
+        userId = user.uid;
+        $('.login-user-img').attr('src', !isEmptyValue(user.photoURL) ? user.photoURL : userLogo);                
+        $('.login-user-img').attr('title', user.displayName);        
+        $('.container-fluid').removeClass('hide').addClass('show');
+        $('.jumbotron').removeClass('show').addClass('hide');
+        $('.login-btn').html('Sign out');
+        $('.login-info').removeClass('hide').addClass('show');        
+        $('.history').css('max-height', window.innerHeight - 119);
+        loadItems('records/' + userId + '/items');
+    } else {
+        console.log('onAuthStateChanged.loggedout');
+        unsubscribe();
+        loggedIn = false;
+        $('.login-info').removeClass('show').addClass('hide');
+        $('.container-fluid').removeClass('show').addClass('hide');
+        $('.jumbotron').removeClass('hide').addClass('show');
+        $('.login-btn').html('Sign in');
+        $('.login-user-img').attr('src', '');
+        $('.login-user-img').attr('title', '');        
+    }
+});
+
+
+
 
 const editor = new EditorJS({
     holder: 'editorjs',  
@@ -51,10 +101,9 @@ const editor = new EditorJS({
 
 let saveBtn = document.querySelector('.save-btn');
 saveBtn.addEventListener('click', function(){
-    editor.save().then((data) => {        
-        
+    editor.save().then((data) => {     
+                        
         delete data.version;
-        cPreview.show(data, document.getElementById("output"));
         // firebaseService.add('records/' + userId + '/items', data);
 
         firestore.collection('records/' + userId + '/items')
@@ -65,66 +114,28 @@ saveBtn.addEventListener('click', function(){
             });
 
     }).catch((error) => {
-        console.log('Saving failed: ', error);
+        console.error('Saving failed: ', error);
     });
 });
 
-let loadBtn = document.querySelector('.load-btn');
-loadBtn.addEventListener('click', function(){    
+// let loadBtn = document.querySelector('.load-btn');
+// loadBtn.addEventListener('click', function(){    
+//     // const datas = firebaseService.getAll('records/' + userId + '/items');
+//     firestore.collection('records/' + userId + '/items')
+//         .get()
+//         .then(function(querySnapshot) {
+//             if(querySnapshot.empty){
+//                 console.log('load() no documents found');                
+//             } else {
+//                 let docs = querySnapshot.docs.map(doc => doc.data());                
+//                 cPreview.show(docs, document.getElementById("output"));
+//             }
+//         })
+//         .catch(function(error) {
+//             console.log("Error getting documents: ", error);
+//         });
 
-    const arr = [];
-    const datas = firebaseService.getAll('records/' + userId + '/items');
-    //const data = firebaseService.get('records/' + userId + '/items/AtPZWhe63L55RCptg9om');
-    //arr.push(data);
-
-    cPreview.show(datas, document.getElementById("output"));
-    
-    // firestore.collection('/records/' + userId + '/items')
-    //     .get()
-    //     .then(function(querySnapshot) {
-    //         let arr = [];
-    //         querySnapshot.forEach(function(doc) {
-    //             if(doc && doc.exists){
-    //                 arr.push(doc.data());                    
-    //             }
-    //         });
-    //         cPreview.show(arr, document.getElementById("output"));
-    //     })
-    //     .catch(function(error) {
-    //         console.log("Error getting documents: ", error);
-    //     });
-
-});
-
-let loginBtn = document.querySelector('.login-btn');
-loginBtn.addEventListener('click', function(){
-    if(loggedIn){
-        firebaseService.signOut();
-    } else {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        firebaseService.signInWithProvider(provider);    
-    }    
-});
-
-auth.onAuthStateChanged(function(user) {
-    if (user) {
-        loggedIn = true;
-        userId = user.uid;
-        $('.login-user-img').attr('src', !isEmptyValue(user.photoURL) ? user.photoURL : userLogo);                
-        $('.login-user-img').attr('title', user.displayName);        
-        $('.login-btn').removeClass('auth-false').addClass('auth-true');
-        $('.login-btn').html('Sign out');
-        $('.login-info').removeClass('hide').addClass('show');
-    } else {             
-        loggedIn = false;
-        $('.login-info').removeClass('show').addClass('hide');
-        $('.login-btn').removeClass('auth-true').addClass('auth-false');            
-        $('.login-btn').html('Sign in');
-        $('.login-user-img').attr('src', '');
-        $('.login-user-img').attr('title', '');
-        
-    }
-});
+// });
 
 function isEmptyValue(value) {
     if (value === undefined || value === null || value.split(' ').join('') === '') {
@@ -132,4 +143,45 @@ function isEmptyValue(value) {
     }
     return false;
 };
+
+function msToTime(duration) {
+    var milliseconds = parseInt((duration % 1000) / 100),
+      seconds = Math.floor((duration / 1000) % 60),
+      minutes = Math.floor((duration / (1000 * 60)) % 60),
+      hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+  
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+  
+    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+};
+
+setTimeout(function(){
+    console.log('setTimeout');
+    if(loggedIn){        
+        loadItems('records/' + userId + '/items');
+    }
+ }, timeout);
+
+ function loadItems(path) {
+    console.log('loadItems: ', path);
+    unsubscribe = firestore.collection(path).orderBy('time', 'desc').limit(1)
+        .onSnapshot(function(querySnapshot) {
+            let docs = [];
+            if(querySnapshot.empty){
+                docs.push('no documents found');                
+            } else {
+                docs = querySnapshot.docs.map(doc => doc.data());
+            }
+            cPreview.show(docs, document.getElementById("output"));
+        }, function(error) {
+            console.error('[' + error.code + '] ' + error.message);
+        });
+
+        // setTimeout(() => {
+        //     unsubscribe();            
+        // }, 1000);
+    
+ };
 

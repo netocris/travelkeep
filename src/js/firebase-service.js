@@ -59,33 +59,33 @@ const firebaseService = (function (module) {
     //     });
     // };
 
-    /**
-     * register a new user with email and password
-     * 
-     * @param email
-     * @param password     
-     */
-    module.createUser = function(email, password) {
-        auth().createUserWithEmailAndPassword(email, password).then(function(result) {
-            console.log('login successfull');
-        }).catch(function(error) {
-            console.log('error: ', error.code, error.message);
-        });
-    };
+    // /**
+    //  * register a new user with email and password
+    //  * 
+    //  * @param email
+    //  * @param password     
+    //  */
+    // module.createUser = function(email, password) {
+    //     auth().createUserWithEmailAndPassword(email, password).then(function(result) {
+    //         console.log('login successfull');
+    //     }).catch(function(error) {
+    //         console.log('error: ', error.code, error.message);
+    //     });
+    // };
 
-    /**
-     * login using an email and password
-     * 
-     * @param email
-     * @param password      
-     */
-    module.signIn = function(email, password) {
-        auth().signInWithEmailAndPassword(email, password).then(function(result) {
-            console.log('login successfull');
-        }).catch(function(error) {
-            console.log('error: ', error.code, error.message);
-        });
-    };
+    // /**
+    //  * login using an email and password
+    //  * 
+    //  * @param email
+    //  * @param password      
+    //  */
+    // module.signIn = function(email, password) {
+    //     auth().signInWithEmailAndPassword(email, password).then(function(result) {
+    //         console.log('login successfull');
+    //     }).catch(function(error) {
+    //         console.log('error: ', error.code, error.message);
+    //     });
+    // };
 
     /**
      * login using a service provider (Google, Twitter, GitHub, Facebook, ...)

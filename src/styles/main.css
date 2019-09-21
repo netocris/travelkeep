@@ -5,46 +5,31 @@ body {
   font-family: 'Montserrat';
 }
 
-#editorjs {
-  background: white;
-}
-
-.ce-block__content {
-  margin: 0 25px auto !important;
-}
-
-/*.ce-toolbar {
-    left: -600px !important;
-}*/
 .container-fluid {
   padding-left: 0;
   padding-right: 0;
 }
 
-.codex-editor {
-  -webkit-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
-          box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
-}
-
-.codex-editor__redactor {
-  padding-bottom: 50px !important;
-}
-
-.output-content {
-  margin: 30px auto;
+.history-content {
+  margin: auto;
   font-size: 10px;
 }
 
-.output-content:empty {
+.history-content:empty {
   display: none;
 }
 
+.history {
+  max-height: 300px;
+  background: #fff;
+}
+
 .save-btn {
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
 .load-btn {
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
 .hide {
@@ -59,5 +44,17 @@ body {
   height: 32px;
   width: 32px;
   border-radius: 50%;
+}
+
+#editorjs {
+  background: #fff;
+}
+
+.ce-block__content {
+  margin: 0 25px auto !important;
+}
+
+.codex-editor__redactor {
+  padding-bottom: 50px !important;
 }
 /*# sourceMappingURL=main.css.map */
